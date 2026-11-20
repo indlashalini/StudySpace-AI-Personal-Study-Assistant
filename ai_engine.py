@@ -10,7 +10,7 @@ load_dotenv()
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
 OLLAMA_MODEL = "llama3.2:latest"
-GEMINI_MODEL = "gemini-3.8-flash"
+GEMINI_MODEL = "gemini-3.5-flash-lite"
 
 
 def _build_prompt(goal, target_date, daily_hours, level, preferences):

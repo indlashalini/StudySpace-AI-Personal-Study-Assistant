@@ -1,5 +1,8 @@
+
 import os
+import time
 import requests
+import streamlit as st
 from dotenv import load_dotenv
 from google import genai
 
@@ -40,24 +43,62 @@ Use simple, student-friendly language.
 """
 
 
+
 def _generate_with_gemini(prompt):
-    api_key = os.getenv("GEMINI_API_KEY")
+    # Read the API key from Streamlit Secrets first,
+    # then fall back to the local .env file.
+    try:
+        api_key = st.secrets.get("GEMINI_API_KEY")
+    except Exception:
+        api_key = None
+
+    if not api_key:
+        api_key = os.getenv("GEMINI_API_KEY")
+
     if not api_key:
         raise RuntimeError(
-            "GEMINI_API_KEY was not found. Check the .env file in the project folder."
+            "GEMINI_API_KEY was not found. "
+            "Check Streamlit Cloud Secrets or your local .env file."
         )
 
     client = genai.Client(api_key=api_key)
+
     try:
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt
-        )
-        if not response.text:
-            raise RuntimeError("Gemini returned an empty response.")
-        return response.text
+        # Retry temporary Gemini service errors.
+        for attempt in range(3):
+            try:
+                response = client.models.generate_content(
+                    model=GEMINI_MODEL,
+                    contents=prompt
+                )
+
+                if not response.text:
+                    raise RuntimeError(
+                        "Gemini returned an empty response."
+                    )
+
+                return response.text
+
+            except Exception as exc:
+                status_code = (
+                    getattr(exc, "code", None)
+                    or getattr(exc, "status_code", None)
+                )
+
+                if status_code not in (429, 500, 502, 503, 504):
+                    raise
+
+                if attempt == 2:
+                    raise RuntimeError(
+                        "Gemini is temporarily unavailable after "
+                        "3 attempts. Please try again later."
+                    ) from exc
+
+                time.sleep(2 ** (attempt + 1))
+
     finally:
         client.close()
+
 
 
 def _generate_with_ollama(prompt):

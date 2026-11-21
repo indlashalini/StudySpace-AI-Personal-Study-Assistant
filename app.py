@@ -183,6 +183,19 @@ footer { visibility: hidden; }
     color: #FFFFFF !important;
 }
 
+/* Fix chatbot typing box text visibility */
+[data-testid="stChatInput"] textarea {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    caret-color: #FFFFFF !important;
+    background-color: #2B2B2B !important;
+}
+
+[data-testid="stChatInput"] textarea::placeholder {
+    color: #D1D5DB !important;
+    opacity: 1 !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 

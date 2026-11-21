@@ -156,3 +156,9 @@ Student Project – AI Agents
 ## GitHub Repository
 
 [StudySpace AI – Personal AI-Powered Study Assistant](https://github.com/indlashalini/StudySpace-AI-Personal-Study-Assistant)
+
+## 📝 Project Article
+
+Read about the development journey, features, technologies, challenges, and deployment of StudySpace AI on Medium.
+
+[Read the StudySpace AI Article on Medium](https://medium.com/@indla.shalini000/studyspace-ai-building-a-personal-ai-powered-study-assistant-using-python-800fede6d023)

@@ -154,6 +154,35 @@ footer { visibility: hidden; }
 @media (max-width: 800px) {
     .block-container { padding: 1rem 1rem 2rem 1rem; }
 }
+
+/* Chatbot message readability */
+[data-testid="stChatMessage"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E5E7F0 !important;
+    border-radius: 14px !important;
+    padding: 16px !important;
+    margin-bottom: 12px !important;
+}
+
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] li,
+[data-testid="stChatMessage"] h1,
+[data-testid="stChatMessage"] h2,
+[data-testid="stChatMessage"] h3,
+[data-testid="stChatMessage"] strong,
+[data-testid="stChatMessage"] em {
+    color: #172554 !important;
+}
+
+[data-testid="stChatMessage"] pre {
+    background-color: #242424 !important;
+    border-radius: 10px !important;
+}
+
+[data-testid="stChatMessage"] pre code {
+    color: #FFFFFF !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
